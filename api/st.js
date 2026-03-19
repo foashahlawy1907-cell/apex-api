@@ -13,10 +13,10 @@ export default function handler(req, res) {
     return res.status(400).send("No URL");
   }
 
-  // 🔥 صفحة بلوجر بتاعتك
-  const bloggerPage = "https://apex-team1.blogspot.com/2026/03/apex-team-redirect-system-body-font.html";
+  // 🔥 صفحة بلوجر الجديدة
+  const bloggerPage = "https://apex-team13.blogspot.com/2026/03/apex-team-redirect-system-body-font.html";
 
-  // مهم: نحافظ على ?m=1
+  // نحافظ على ?m=1
   const finalLink = `${bloggerPage}?m=1&url=${encodeURIComponent(url)}`;
 
   // تحويل
