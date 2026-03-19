@@ -1,9 +1,8 @@
 {
-  "version": 2,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/st",
-      "destination": "/api/st.js"
+      "src": "/st",
+      "dest": "/api/st.js"
     }
   ]
 }
