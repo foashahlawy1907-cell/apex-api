@@ -1,13 +1,19 @@
 module.exports = (req, res) => {
+  // سحب رابط الفصل اللي Dilar بيبعته
   const urlParam = req.query.url || req.url.split('url=')[1];
-  const bloggerPage = "https://apex-team1.blogspot.com/2026/03/apex-team-redirector.html";
+  
+  // الرابط الجديد الاحترافي لصفحة التحويل في بلوجر
+  const bloggerPage = "https://apex-team1.blogspot.com/2026/03/apex-team-redirect-system-body-font.html";
 
   if (!urlParam) {
-    return res.status(400).json({ status: "error", message: "Invalid Request" });
+    // لو مفيش رابط فصل، ابعته للمدونة مباشرة
+    return res.redirect(bloggerPage);
   }
 
-  const finalUrl = `${bloggerPage}?url=${urlParam}`;
+  // بناء الرابط النهائي: رابط المدونة + رابط الفصل مشفر
+  const finalUrl = `${bloggerPage}?url=${encodeURIComponent(urlParam)}`;
 
+  // الرد بصيغة JSON لموقع Dilar
   res.status(200).json({
     status: "success",
     shortenedUrl: finalUrl
