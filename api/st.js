@@ -1,24 +1,28 @@
-module.exports = async (req, res) => {
-  // 1. سحب الرابط من الـ Query String
-  const { url } = req.query;
-  
-  // 2. رابط صفحة بلوجر الجديدة (بدون m=1)
-  const bloggerPage = "https://apex-team1.blogspot.com/2026/03/apex-team-secure-redirect-body-font.html";
+export default function handler(req, res) {
+  const { api, url } = req.query;
 
-  // 3. لو مفيش رابط، ابعته للمدونة فوراً
-  if (!url) {
-    return res.redirect(301, bloggerPage);
+  const VALID_API = "123456"; // غيره براحتك
+
+  // تحقق من API
+  if (api !== VALID_API) {
+    return res.status(403).send("Invalid API");
   }
 
-  // 4. بناء الرابط النهائي مع التشفير
-  const finalRedirect = `${bloggerPage}?url=${encodeURIComponent(url)}`;
+  // تحقق من الرابط
+  if (!url) {
+    return res.status(400).send("No URL");
+  }
 
-  // 5. الرد بصيغة JSON لموقع Dilar
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Access-Control-Allow-Origin', '*'); // للسماح لـ Dilar بالوصول
-  
-  return res.status(200).json({
-    status: "success",
-    shortenedUrl: finalRedirect
+  // 🔥 صفحة بلوجر بتاعتك
+  const bloggerPage = "https://apex-team1.blogspot.com/2026/03/apex-team-redirect-system-body-font.html";
+
+  // مهم: نحافظ على ?m=1
+  const finalLink = `${bloggerPage}?m=1&url=${encodeURIComponent(url)}`;
+
+  // تحويل
+  res.writeHead(302, {
+    Location: finalLink,
   });
-};
+
+  res.end();
+}
