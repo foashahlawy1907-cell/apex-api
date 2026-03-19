@@ -1,19 +1,18 @@
 module.exports = (req, res) => {
-  // الحصول على الرابط من الاستعلام بعد علامة url=
+  // بنسحب الرابط اللي Dilar هيبعته بعد علامة url=
   const urlParam = req.query.url || req.url.split('url=')[1];
   const bloggerPage = "https://apex-team1.blogspot.com/2026/03/apex-team-redirector.html";
 
   if (!urlParam) {
-    return res.status(400).send("Error: No URL provided");
+    return res.status(400).json({ error: "Missing URL" });
   }
 
-  // بناء الرابط النهائي لمدونة أيبكس
-  const finalUrl = `${bloggerPage}?url=${urlParam}`;
+  // بنجهز الرابط اللي هيروح لمدونة أيبكس
+  const finalUrl = `${bloggerPage}?url=${encodeURIComponent(urlParam)}`;
 
-  // الرد بصيغة JSON بسيطة جداً (أو نص مباشر حسب إعداد ديلار)
-  res.setHeader('Content-Type', 'application/json');
-  res.status(200).send(JSON.stringify({
+  // الرد بالصيغة اللي Dilar بيفهمها
+  res.status(200).json({
     status: "success",
     shortenedUrl: finalUrl
-  }));
+  });
 };
