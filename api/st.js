@@ -14,9 +14,9 @@ export default function handler(req, res) {
   }
 
   // 🔥 صفحة بلوجر الجديدة
-  const bloggerPage = "https://apex-team13.blogspot.com/2026/03/apex-team-redirect-system-body-font.html";
+  const bloggerPage = "https://apex-team13.blogspot.com/2026/03/apex-team-secure-gateway-root-main.html";
 
-  // نحافظ على ?m=1
+  // مهم: نحافظ على ?m=1
   const finalLink = `${bloggerPage}?m=1&url=${encodeURIComponent(url)}`;
 
   // تحويل
