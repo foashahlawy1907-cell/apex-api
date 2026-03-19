@@ -1,27 +1,19 @@
 module.exports = (req, res) => {
-  // جلب الرابط بالكامل من مسار الطلب
-  const fullUrl = req.url;
-  let targetUrl = "";
-
-  // استخراج الرابط الذي يضعه Dilar بعد علامة &url=
-  if (fullUrl.includes("url=")) {
-    targetUrl = fullUrl.split("url=")[1];
-  }
-
-  // رابط مدونة بلوجر الخاصة بفريق Apex
+  // الحصول على الرابط من الاستعلام بعد علامة url=
+  const urlParam = req.query.url || req.url.split('url=')[1];
   const bloggerPage = "https://apex-team1.blogspot.com/2026/03/apex-team-redirector.html";
 
-  if (!targetUrl) {
-    // إذا لم يجد رابط، يحول لمدونة أيبكس مباشرة
-    return res.redirect(bloggerPage);
+  if (!urlParam) {
+    return res.status(400).send("Error: No URL provided");
   }
 
-  // بناء الرابط النهائي المتوافق مع Dilar وبلوجر
-  const finalRedirect = `${bloggerPage}?url=${targetUrl}`;
+  // بناء الرابط النهائي لمدونة أيبكس
+  const finalUrl = `${bloggerPage}?url=${urlParam}`;
 
-  // الرد بصيغة JSON التي يطلبها Dilar
-  res.status(200).json({
+  // الرد بصيغة JSON بسيطة جداً (أو نص مباشر حسب إعداد ديلار)
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).send(JSON.stringify({
     status: "success",
-    shortenedUrl: finalRedirect
-  });
+    shortenedUrl: finalUrl
+  }));
 };
